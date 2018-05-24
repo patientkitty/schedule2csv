@@ -74,4 +74,13 @@ class scheduleController extends Controller
         }
 
     }
+
+    public function test(){
+        $results = Weekday::where('id','<',10)->get();
+        dd($results);
+    }
+
+    public function inputview(){
+        return view('input');
+    }
 }
