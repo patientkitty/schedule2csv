@@ -15,3 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/weekday','weekdayController@readExcel');
+Route::get('/newschedule','scheduleController@newschedule');
