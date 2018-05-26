@@ -83,4 +83,7 @@ class scheduleController extends Controller
     public function inputview(){
         return view('input');
     }
+    public function add($request){
+        return view('input',['request'=>$request]);
+    }
 }
