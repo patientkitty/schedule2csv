@@ -83,7 +83,10 @@ class scheduleController extends Controller
     public function inputview(){
         return view('input');
     }
-    public function add($request){
-        return view('input',['request'=>$request]);
+    public function add(Request $request){
+        //$inputs = $request->input('Group');
+        //return view('input',['inputs'=>$inputs]);
+        echo $request->input('group');
+        dd($request);
     }
 }
