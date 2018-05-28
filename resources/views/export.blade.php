@@ -11,9 +11,26 @@
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </div>
-
     </form>
-
+    <br>
+    <form action="exportData" method="get" enctype="multipart/form-data">
+        <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+        @if(empty($searchGroup) == false)
+        <input type="hidden" name="searchGroup" value="{{ $searchGroup }}"/>
+        @endif
+        <div class="form-row">
+            <div>
+                <label>Total Export:</label>
+                @if(empty($total) == false)
+                <label>{{$total}}</label>
+                @endif
+                <button type="submit" class="btn btn-primary">Export</button>
+            </div>
+        </div>
+    </form>
+    @if(empty($searchGroup) == false)
+    <a href="{{ url('/exportData/' . $searchGroup) }}" class="btn btn-primary">Export</a>
+    @endif
     <br>
 
     <table class="table">

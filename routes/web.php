@@ -20,4 +20,5 @@ Route::get('/test','scheduleController@test');
 Route::get('/input','scheduleController@inputview');
 Route::post('/add','scheduleController@add');
 Route::get('/export','scheduleController@export');
+Route::get('/exportData/{searchGroup}','scheduleController@exportData');
 Route::get('searchGroup','scheduleController@searchGroup');

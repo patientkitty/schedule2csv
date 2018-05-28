@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Schedule;
 use App\Models\Export;
 use App\Models\Weekday;
+use Maatwebsite\Excel\Facades\Excel;
 
 class scheduleController extends Controller
 {
@@ -74,8 +75,12 @@ class scheduleController extends Controller
     }
     public function searchGroup(Request $request){
         $searchGroup = $request->input('group');
-        $result = Export::where('group','=',$searchGroup)->get();
-        return view('export',['inputs'=>$result]);
+        $results = Export::where('group','=',$searchGroup)->get();
+        $count = count($results);
+        $inputs = $results;
+        $total = $count;
+        return view('export', compact('inputs', 'total', 'searchGroup'));
+        //return view('export',['inputs'=>$results],['total'=>$count],['searchGroup'=>$searchGroup]);
     }
     public function searchEventName($data){
         //通过event_name和group，返回export表中已经有的数据
@@ -84,6 +89,18 @@ class scheduleController extends Controller
             ['group','=',$data['group']],
         ])->get();
         return $existExport;
+    }
+    public function exportData($searchGroup){
+       // $searchGroup = $request->get('searchGroup');
+        $results = Export::where('group','=',$searchGroup)->get();
+        //dd($results);
+        //echo count($results);
+        $filename = uniqid() ;
+        Excel::create($filename, function($excel) use ($results) {
+            $excel->sheet('Sheet 1', function($sheet) use($results) {
+                $sheet->fromArray($results->toArray());
+            });
+        })->download('xlsx');
     }
 
     public function test(){
