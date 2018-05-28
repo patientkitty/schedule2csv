@@ -25,7 +25,8 @@ class scheduleController extends Controller
         ])->get();
         $count = count($existSchedule);
         if($count <> 0){
-            echo 'schedule already exist';
+            return redirect('input')->withErrors('already exist');
+            //echo 'schedule already exist';
         }else{
             //dd($data);
             //插入schedules表，记录课程每周几上课

@@ -1,6 +1,7 @@
 @extends('layouts.bootstrapHead')
 
 @section('content')
+
     <h1>New Schedule Form</h1>
     <form action="add" method="post" enctype="multipart/form-data">
         <input type="hidden" name="_token" value="{{csrf_token()}}"/>

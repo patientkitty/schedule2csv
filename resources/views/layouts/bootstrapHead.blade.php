@@ -46,6 +46,7 @@
 
     <body>
     <div class="container my-4">
+        @include('layouts.errors')
         @yield('content')
     </div>
     {{-- Footer --}}
