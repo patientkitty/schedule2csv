@@ -1,7 +1,7 @@
 @extends('layouts.bootstrapHead')
 
 @section('content')
-    <h1>Sample Form</h1>
+    <h1>New Schedule Form</h1>
     <form action="add" method="post" enctype="multipart/form-data">
         <input type="hidden" name="_token" value="{{csrf_token()}}"/>
         <div class="form-row">
@@ -42,76 +42,37 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <br>
-    <a href="#" class="btn btn-primary">This is a button</a>
+
     <table class="table">
         <thead>
         <tr>
             <th scope="col">Group</th>
-            <th scope="col">Course Name</th>
-            <th scope="col">Date Start</th>
-            <th scope="col">Date End</th>
+            <th scope="col">Event Name</th>
+            <th scope="col">Date</th>
             <th scope="col">Time Start</th>
             <th scope="col">Time End</th>
-            <th scope="col">Week Day</th>
             <th scope="col">Classroom</th>
         </tr>
         </thead>
-        <form action="add" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-        <tbody>
-        <tr>
-            <td>
-                <div class="col-md-6">
-                <input type="text" class="form-control" name="Group" placeholder="Group #" >
-                </div>
-            </td>
-            <td>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" name="Group" placeholder="Group #" >
-                </div>
-            </td>
-            <td>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" name="Group" placeholder="Group #" >
-                </div>
-            </td>
-            <td>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" name="Group" placeholder="Group #" >
-                </div>
-            </td>
-            <td>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" name="Group" placeholder="Group #" >
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
 
-            </td>
+        @if(!empty($inputs))
+            @foreach($inputs as $input)
+                <tbody>
+                <tr>
+                    <td>{{$input->group}}</td>
+                    <td>{{$input->event_name}}</td>
+                    <td>{{$input->date}}</td>
+                    <td>{{$input->time_start}}</td>
+                    <td>{{$input->time_end}}</td>
+                    <td>{{$input->room}}</td>
+                </tr>
 
-        </tr>
-        </tbody>
-            <button type="submit">创建</button>
-        </form>
+                </tbody>
+            @endforeach
+        @endif
     </table>
     <h1>End of TABLE</h1>
 
 
-    @if(!empty($inputs))
-        <div class="col-md-7">
-            <table class="table table-bordered table-striped">
-                <tbody>
-                <tr>
-                    <th>Seat Code</th>
-                    <td>{{$inputs}}</td>
-                </tr>
-
-
-                </tbody>
-            </table>
-        </div>
-    @endif
 
 @endsection

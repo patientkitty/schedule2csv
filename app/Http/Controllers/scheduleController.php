@@ -22,7 +22,8 @@ class scheduleController extends Controller
             ['room','=',$data['room']],
             ['weekdays','=',$data['weekdays']],
         ])->get();
-        if($existSchedule){
+        $count = count($existSchedule);
+        if($count <> 0){
             echo 'schedule already exist';
         }else{
             //dd($data);
@@ -71,8 +72,18 @@ class scheduleController extends Controller
 
 
     }
-    public function searchEventName(){
-        echo 'hello';
+    public function searchGroup(Request $request){
+        $searchGroup = $request->input('group');
+        $result = Export::where('group','=',$searchGroup)->get();
+        return view('export',['inputs'=>$result]);
+    }
+    public function searchEventName($data){
+        //通过event_name和group，返回export表中已经有的数据
+        $existExport = Export::where([
+            ['event_name','=',$data['event_name']],
+            ['group','=',$data['group']],
+        ])->get();
+        return $existExport;
     }
 
     public function test(){
@@ -88,7 +99,12 @@ class scheduleController extends Controller
         //return view('input',['inputs'=>$inputs]);
         $inputs= $request->all();
         $this->newschedule($inputs);
+        $existExport = $this->searchEventName($inputs);
+        return view('input',['inputs'=>$existExport]);
         echo 'Add Complete';
         //dd($inputs);
+    }
+    public function export(){
+        return view('export');
     }
 }
