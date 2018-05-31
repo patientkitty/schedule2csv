@@ -7,7 +7,7 @@
         <div class="form-row">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Group</span>
-                <input type="text" name="group" class="form-control" id="inputGroup" placeholder="#">
+                <input type="number" name="group" class="form-control" id="inputGroup" placeholder="#" min="1" max="100">
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </div>
@@ -24,13 +24,13 @@
                 @if(empty($total) == false)
                 <label>{{$total}}</label>
                 @endif
-                <button type="submit" class="btn btn-primary">Export</button>
+                @if(empty($searchGroup) == false)
+                    <a href="{{ url('/exportData/' . $searchGroup) }}" class="btn btn-primary">Export</a>
+                @endif
             </div>
         </div>
     </form>
-    @if(empty($searchGroup) == false)
-    <a href="{{ url('/exportData/' . $searchGroup) }}" class="btn btn-primary">Export</a>
-    @endif
+
     <br>
 
     <table class="table">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreScheduleRequest;
 use Illuminate\Http\Request;
 use App\Models\Schedule;
 use App\Models\Export;
@@ -13,21 +14,7 @@ class scheduleController extends Controller
     //
     public function newschedule($data){
 
-        //从网页表单inputs获取课程信息$data，检查在schedule表中是否存在重复数据
-        $existSchedule = Schedule::where([
-            ['event_name','=',$data['event_name']],
-            ['date_start','=',$data['date_start']],
-            ['date_end','=',$data['date_end']],
-            ['time_start','=',$data['time_start']],
-            ['time_end','=',$data['time_end']],
-            ['room','=',$data['room']],
-            ['weekdays','=',$data['weekdays']],
-        ])->get();
-        $count = count($existSchedule);
-        if($count <> 0){
-            return redirect('input')->withErrors('already exist');
-            //echo 'schedule already exist';
-        }else{
+
             //dd($data);
             //插入schedules表，记录课程每周几上课
             $schedule = new Schedule();
@@ -70,7 +57,7 @@ class scheduleController extends Controller
                 }
                 $export->save();
             }
-        }
+
 
 
     }
@@ -116,10 +103,11 @@ class scheduleController extends Controller
         //$inputs = $request->input('Group');
         //return view('input',['inputs'=>$inputs]);
         $inputs= $request->all();
+        //return redirect('/input');
         $this->newschedule($inputs);
+        //return redirect('/input');
         $existExport = $this->searchEventName($inputs);
         return view('input',['inputs'=>$existExport]);
-        echo 'Add Complete';
         //dd($inputs);
     }
     public function export(){

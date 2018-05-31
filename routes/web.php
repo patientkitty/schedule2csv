@@ -17,8 +17,8 @@ Route::get('/', function () {
 Route::get('/weekday','weekdayController@readExcel');
 Route::get('/newschedule','scheduleController@newschedule');
 Route::get('/test','scheduleController@test');
-Route::get('/input','scheduleController@inputview');
-Route::post('/add','scheduleController@add');
+Route::get('/input','scheduleController@inputview')->name('input');
+Route::post('/add','scheduleController@add')->middleware('reject_if_schedule_exists');
 Route::get('/export','scheduleController@export');
 Route::get('/exportData/{searchGroup}','scheduleController@exportData');
 Route::get('searchGroup','scheduleController@searchGroup');
