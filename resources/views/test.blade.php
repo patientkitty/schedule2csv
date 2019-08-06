@@ -1,35 +1,30 @@
 @extends('layouts.bootstrapHead')
 
 @section('content')
-    <h1>Schedule Export</h1>
-    <form action="searchGroup" method="get" enctype="multipart/form-data">
+    <h1>Date Format Test</h1>
+    <form action="dateTest" method="post" enctype="multipart/form-data">
         <input type="hidden" name="_token" value="{{csrf_token()}}"/>
         <div class="form-row">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Group</span>
-                <input type="number" name="group" class="form-control" id="inputGroup" placeholder="#" min="1" max="9900000">
-                <button type="submit" class="btn btn-primary">Search</button>
+                <input type="date" name="date" class="form-control" id="inputGroup" placeholder="#">
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </form>
     <br>
-    <form action="exportData" method="get" enctype="multipart/form-data">
-        <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-        @if(empty($searchGroup) == false)
-        <input type="hidden" name="searchGroup" value="{{ $searchGroup }}"/>
-        @endif
-        <div class="form-row">
-            <div>
-                <label>Total Export:</label>
-                @if(empty($total) == false)
+    <div class="form-row">
+        <div>
+            <label>Total Export:</label>
+            @if(empty($total) == false)
                 <label>{{$total}}</label>
-                @endif
-                @if(empty($searchGroup) == false)
-                    <a href="{{ url('/exportData/' . $searchGroup) }}" class="btn btn-primary">Export</a>
-                @endif
-            </div>
+            @endif
+            @if(empty($searchGroup) == false)
+                <a href="{{ url('/exportData/' . $searchGroup) }}" class="btn btn-primary">Export</a>
+            @endif
         </div>
-    </form>
+    </div>
+
 
     <br>
 

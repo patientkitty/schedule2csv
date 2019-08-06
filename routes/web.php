@@ -22,3 +22,7 @@ Route::post('/add','scheduleController@add')->middleware('reject_if_schedule_exi
 Route::get('/export','scheduleController@export');
 Route::get('/exportData/{searchGroup}','scheduleController@exportData');
 Route::get('searchGroup','scheduleController@searchGroup');
+Route::post('/dateTest','scheduleController@dateTest');
+Route::post('/bulkImportSchedule','scheduleController@bulkImportSchedule');
+
+Route::get('/emsTemplate','scheduleController@template');

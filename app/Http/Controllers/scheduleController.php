@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreScheduleRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Schedule;
 use App\Models\Export;
 use App\Models\Weekday;
@@ -89,11 +91,57 @@ class scheduleController extends Controller
                 $sheet->fromArray($results->toArray());
             });
         })->download('xlsx');
+
     }
 
     public function test(){
-        $results = Weekday::where('id','<',10)->get();
-        dd($results);
+        return view('test');
+    }
+    public function dateTest(Request $request){
+        $result = $request->all();
+        dd($result);
+
+    }
+
+    public function template()
+    {
+
+        return Storage::download('/public/classScheduleImportTemplate/scheduleImportTemplate.xlsx');
+    }
+
+    public function bulkImportSchedule(Request $request){
+        echo "good!";
+        //Save uploaded file to $path
+        $path = $request->file('emsUpload')->store('/public/emsUpload');
+        //Load the just uploaded excel file
+        $path1 = storage_path( 'app/' . $path);
+        Excel::load($path1, function($reader) {
+            $excelDatas = $reader->formatDates(false)->toArray();
+            foreach ($excelDatas as $excelData) {
+                $this->newschedule($excelData);
+                //dd($excelData);
+//                $schedule = new Schedule();
+////                foreach ($excelData as $key => $value) {
+////
+////                        $schedule->$key = $excelData[$key];
+////                }
+////                $schedule->save();
+////                $schedule = new Schedule();
+//                $schedule->group = $excelData['group'];
+//                $schedule->event_name = $excelData['event_name'];
+//                $schedule->date_start = $excelData['date_start'];
+//                $schedule->date_end = $excelData['date_end'];
+//                $schedule->time_start = $excelData['time_start'];
+//                $schedule->time_end = $excelData['time_end'];
+//                $schedule->weekdays = $excelData['weekdays'];
+//                $schedule->room = $excelData['room'];
+//                $schedule->save();
+
+            }
+        });
+        $results['Bulk Import'] = $path . ' Import Complete!';
+        return view('input',['inputs'=>$results]);
+
     }
 
     public function inputview(){

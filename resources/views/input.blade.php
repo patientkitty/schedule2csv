@@ -8,7 +8,7 @@
         <div class="form-row">
             <div class="form-group col-md-1">
                 <label for="inputGroup">Group</label>
-                <input type="number" name="group" class="form-control" id="inputGroup" placeholder="#" min="1" max="100">
+                <input type="number" name="group" class="form-control" id="inputGroup" placeholder="#" min="1" max="9900000">
             </div>
             <div class="form-group col-md-2">
                 <label for="inputCourseName">Course Name</label>
@@ -59,6 +59,19 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <br>
+    <h3>Bulk Upload Class Schedule</h3>
+    <form action="bulkImportSchedule" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+        <div class="form-group">
+            <label for="uploadFile">Please upload new EMS user import template</label>
+            <a class="btn btn-outline-info" href="{{url('/emsTemplate')}}" role="button">Download Template</a>
+            <input type="file" name="emsUpload" class="form-control-file" id="uploadFile">
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+    <br>
 
     <table class="table">
         <thead>
@@ -73,15 +86,17 @@
         </thead>
 
         @if(!empty($inputs))
-            @foreach($inputs as $input)
+            @foreach($inputs as $key => $value)
                 <tbody>
                 <tr>
-                    <td>{{$input->group}}</td>
-                    <td>{{$input->event_name}}</td>
-                    <td>{{$input->date}}</td>
-                    <td>{{$input->time_start}}</td>
-                    <td>{{$input->time_end}}</td>
-                    <td>{{$input->room}}</td>
+                    {{--<td>{{$input->group}}</td>--}}
+                    {{--<td>{{$input->event_name}}</td>--}}
+                    {{--<td>{{$input->date}}</td>--}}
+                    {{--<td>{{$input->time_start}}</td>--}}
+                    {{--<td>{{$input->time_end}}</td>--}}
+                    {{--<td>{{$input->room}}</td>--}}
+                    <td>{{$key}}</td>
+                    <td>{{$inputs[$key]}}</td>
                 </tr>
 
                 </tbody>
